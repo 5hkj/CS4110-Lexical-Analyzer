@@ -35,7 +35,52 @@ class TrieTable:
         print("        ", index)
         print("symbolArray: ", symbol)
         print("nextSet:   ", nextSet)
-        # print(nextSet)
+
+    # Write the formatted trie table to a specified file
+    def printTrieToFile(self, file):
+        capLetters = "   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z"
+        lowLetters = "   a   b   c   d   e   f   g   h   i   j   k   l   m   n   o   p   q   r   s   t   u   v   w   x   y   z"
+        letterIndex = ""
+        index = ""
+        switch = ""
+        symbol = ""
+        nextSet = ""
+
+        #This will format the strings
+        for i in range(len(self.switch)):
+            switch += "{:4d}".format(self.switch[i])
+        for i in range(len(self.symbol)):
+            index += "{:4d}".format(i)
+            symbol += "{:4c}".format(ord(self.symbol[i]))
+            nextSet += "{:4d}".format(self.nextArr[i])
+
+        # split strings
+        charCountPerRow = 90
+        allLetters = capLetters + lowLetters
+        splitLetters = [allLetters[y-charCountPerRow:y] for y in range(charCountPerRow, len(allLetters)+charCountPerRow, charCountPerRow)]
+        splitSwitch = [switch[y-charCountPerRow:y] for y in range(charCountPerRow, len(switch)+charCountPerRow,charCountPerRow)]
+        splitIndex = [index[y-charCountPerRow:y] for y in range(charCountPerRow, len(index)+charCountPerRow,charCountPerRow)]
+        splitSymbol = [symbol[y-charCountPerRow:y] for y in range(charCountPerRow, len(symbol)+charCountPerRow,charCountPerRow)]
+        splitNext = [nextSet[y-charCountPerRow:y] for y in range(charCountPerRow, len(nextSet)+charCountPerRow,charCountPerRow)]
+
+
+        # check that file can be written to
+        if not os.access(file.name, os.W_OK):
+            print("Cannot write to file.")
+            return
+
+        # print the formatted strings
+        file.write("\n")
+        for stringIndex in range(len(splitLetters)):
+            file.write("        " + splitLetters[stringIndex] + "\n")
+            file.write("switch: " + splitSwitch[stringIndex] + "\n")
+            file.write("\n")
+        file.write("\n\n")
+        for stringIndex in range(len(splitIndex)):
+            file.write("        " + splitIndex[stringIndex] + "\n")
+            file.write("symbol: " + splitSymbol[stringIndex] + "\n")
+            file.write("next:   " + splitNext[stringIndex] + "\n")
+            file.write("\n")
 
     # Grow the trie table.
     def growTable(self):
