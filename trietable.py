@@ -1,3 +1,5 @@
+import os
+
 class TrieTable:
     maxTransitions = 25
     # stores index if switch uppercase: 0-25, lowercase: 26-51
@@ -47,12 +49,12 @@ class TrieTable:
         nextSet = ""
 
         #This will format the strings
-        for i in range(len(self.switch)):
-            switch += "{:4d}".format(self.switch[i])
-        for i in range(len(self.symbol)):
+        for i in range(len(self.switchArray)):
+            switch += "{:4d}".format(self.switchArray[i])
+        for i in range(len(self.symbolArray)):
             index += "{:4d}".format(i)
-            symbol += "{:4c}".format(ord(self.symbol[i]))
-            nextSet += "{:4d}".format(self.nextArr[i])
+            symbol += "{:4c}".format(ord(self.symbolArray[i]))
+            nextSet += "{:4d}".format(self.nextArray[i])
 
         # split strings
         charCountPerRow = 90
