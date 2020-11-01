@@ -4,4 +4,4 @@
 # Python Version 3.9.0
 
 # To Run: 
-On PyCharm: Run toy.py 
+Run toy.py 
