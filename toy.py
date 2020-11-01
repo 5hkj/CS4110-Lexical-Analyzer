@@ -1,5 +1,7 @@
 import ply.lex as lex
+import trietable as trie
 
+# 1. keywords/reserved words incl. 7. boolean constant
 keyword = {
     'boolean':    'BOOLEAN',
     'break':      'BREAK',
@@ -35,7 +37,7 @@ tokens = [
             'STRINGCONSTANT', 'ID', 'NEWLINE'
          ] + list(keyword.values())
 
-# operators
+# 8. operators & punctuation
 t_PLUS         = r'\+'
 t_MINUS        = r'\-'
 t_MULT         = r'\*'
@@ -61,24 +63,31 @@ t_RIGHTBRACKET = r'\]'
 t_LEFTBRACE    = r'\{'
 t_RIGHTBRACE   = r'\}'
 
+# 4. integer constant
 t_INTCONSTANT = r'0[xX][0-9a-fA-F]+|[0-9]+(?!\.)'
+# 5. double constant
 t_DOUBLECONSTANT = r'[0-9]+\.[0-9]*([eE]([+-])?[0-9]+)?'
+# 6. string constant
 t_STRINGCONSTANT = r'\"(\\.|[^"\\])*\"'
+
+# 3. white spaces
+t_ignore_SPACE = r'\s'
+t_ignore_TAB = r'\t'
+# t_ignore_NEWLINE = r'\n'
+
+# 9. comments
+t_ignore_COMMENT = r'\//.*'
+t_ignore_BLOCK_COMMENT = r'\/\*(.|\n)*\*\/'
 
 def t_ID(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
+    # check to see if it is a keyword
     t.type = keyword.get(t.value, 'ID')
     return t
 
 def t_NEWLINE(t):
     r'\n'
     return t
-
-t_ignore_SPACE = r'\s'
-t_ignore_TAB = r'\t'
-# t_ignore_NEWLINE = r'\n'
-t_ignore_COMMENT = r'\//.*'
-t_ignore_BLOCK_COMMENT = r'\/\*(.|\n)*\*\/'
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
@@ -87,10 +96,18 @@ def t_error(t):
 
 
 lexer = lex.lex()
-file = open("toy_program.txt", "r", encoding='utf-8')
-lexer.input(file.read())
+t = trie.TrieTable()
+input  = open("toy_program.txt", "r", encoding='utf-8')
+output = open("output.txt", "w", encoding='utf-8')
+lexer.input(input.read())
 for tok in lexer:
     if tok.type=='NEWLINE':
-        print()
+        output.write("\n")
     else:
-        print(tok.type.lower(), end=" ")
+        output.write(tok.type.lower() + " ")
+        t.searchAndCreateIDs(tok.value)
+output.write("\n")
+t.printTrieToFile(output)
+
+input.close()
+output.close()
