@@ -185,12 +185,10 @@ class TrieTable:
                         else:
                             return False
 
-
-                # else if nextArray[ptr] is defined then check symbolArray[nextArray[ptr]]
                 elif (self.nextArray[ptr] != -1):
                     ptr = self.nextArray[ptr]
 
-                # else create new identifier
+                #create new identifier
                 else:
                     self.createID(identifier[index:], ptr)
                     exitLoop = True
