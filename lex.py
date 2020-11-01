@@ -1,38 +1,3 @@
-# -----------------------------------------------------------------------------
-# ply: lex.py
-#
-# Copyright (C) 2001-2020
-# David M. Beazley (Dabeaz LLC)
-# All rights reserved.
-#
-# Latest version: https://github.com/dabeaz/ply
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-# * Redistributions of source code must retain the above copyright notice,
-#   this list of conditions and the following disclaimer.
-# * Redistributions in binary form must reproduce the above copyright notice,
-#   this list of conditions and the following disclaimer in the documentation
-#   and/or other materials provided with the distribution.
-# * Neither the name of David Beazley or Dabeaz LLC may be used to
-#   endorse or promote products derived from this software without
-#   specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-# -----------------------------------------------------------------------------
-
 import re
 import sys
 import types
@@ -77,20 +42,6 @@ class PlyLogger(object):
     info = critical
     debug = critical
 
-# -----------------------------------------------------------------------------
-#                        === Lexing Engine ===
-#
-# The following Lexer class implements the lexer runtime.   There are only
-# a few public methods and attributes:
-#
-#    input()          -  Store a new string in the lexer
-#    token()          -  Get the next token
-#    clone()          -  Clone the lexer
-#
-#    lineno           -  Current line number
-#    lexpos           -  Current position in the input string
-# -----------------------------------------------------------------------------
-
 class Lexer:
     def __init__(self):
         self.lexre = None             # Master regular expression. This is a list of
@@ -122,10 +73,6 @@ class Lexer:
     def clone(self, object=None):
         c = copy.copy(self)
 
-        # If the object parameter has been supplied, it means we are attaching the
-        # lexer to a new object.  In this case, we have to rebind all methods in
-        # the lexstatere and lexstateerrorf tables.
-
         if object:
             newtab = {}
             for key, ritem in self.lexstatere.items():
@@ -146,17 +93,11 @@ class Lexer:
             c.lexmodule = object
         return c
 
-    # ------------------------------------------------------------
-    # input() - Push a new string into the lexer
-    # ------------------------------------------------------------
     def input(self, s):
         self.lexdata = s
         self.lexpos = 0
         self.lexlen = len(s)
 
-    # ------------------------------------------------------------
-    # begin() - Changes the lexing state
-    # ------------------------------------------------------------
     def begin(self, state):
         if state not in self.lexstatere:
             raise ValueError(f'Undefined state {state!r}')
@@ -167,52 +108,30 @@ class Lexer:
         self.lexeoff = self.lexstateeoff.get(state, None)
         self.lexstate = state
 
-    # ------------------------------------------------------------
-    # push_state() - Changes the lexing state and saves old on stack
-    # ------------------------------------------------------------
     def push_state(self, state):
         self.lexstatestack.append(self.lexstate)
         self.begin(state)
 
-    # ------------------------------------------------------------
-    # pop_state() - Restores the previous state
-    # ------------------------------------------------------------
     def pop_state(self):
         self.begin(self.lexstatestack.pop())
 
-    # ------------------------------------------------------------
-    # current_state() - Returns the current lexing state
-    # ------------------------------------------------------------
     def current_state(self):
         return self.lexstate
 
-    # ------------------------------------------------------------
-    # skip() - Skip ahead n characters
-    # ------------------------------------------------------------
     def skip(self, n):
         self.lexpos += n
 
-    # ------------------------------------------------------------
-    # token() - Return the next token from the Lexer
-    #
-    # Note: This function has been carefully implemented to be as fast
-    # as possible.  Don't make changes unless you really know what
-    # you are doing
-    # ------------------------------------------------------------
     def token(self):
-        # Make local copies of frequently referenced attributes
         lexpos    = self.lexpos
         lexlen    = self.lexlen
         lexignore = self.lexignore
         lexdata   = self.lexdata
 
         while lexpos < lexlen:
-            # This code provides some short-circuit code for whitespace, tabs, and other ignored characters
             if lexdata[lexpos] in lexignore:
                 lexpos += 1
                 continue
-
-            # Look for a regular expression match
+                
             for lexre, lexindexfunc in self.lexre:
                 m = lexre.match(lexdata, lexpos)
                 if not m:
@@ -313,40 +232,14 @@ class Lexer:
             raise StopIteration
         return t
 
-# -----------------------------------------------------------------------------
-#                           ==== Lex Builder ===
-#
-# The functions and classes below are used to collect lexing information
-# and build a Lexer object from it.
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# _get_regex(func)
-#
-# Returns the regular expression assigned to a function either as a doc string
-# or as a .regex attribute attached by the @TOKEN decorator.
-# -----------------------------------------------------------------------------
 def _get_regex(func):
     return getattr(func, 'regex', func.__doc__)
 
-# -----------------------------------------------------------------------------
-# get_caller_module_dict()
-#
-# This function returns a dictionary containing all of the symbols defined within
-# a caller further down the call stack.  This is used to get the environment
-# associated with the yacc() call if none was provided.
-# -----------------------------------------------------------------------------
+
 def get_caller_module_dict(levels):
     f = sys._getframe(levels)
     return { **f.f_globals, **f.f_locals }
 
-# -----------------------------------------------------------------------------
-# _form_master_re()
-#
-# This function takes a list of all of the regex components and attempts to
-# form the master regular expression.  Given limitations in the Python re
-# module, it may be necessary to break the master regex into separate expressions.
-# -----------------------------------------------------------------------------
 def _form_master_re(relist, reflags, ldict, toknames):
     if not relist:
         return [], [], []
@@ -377,14 +270,7 @@ def _form_master_re(relist, reflags, ldict, toknames):
         rlist, rre, rnames = _form_master_re(relist[m:], reflags, ldict, toknames)
         return (llist+rlist), (lre+rre), (lnames+rnames)
 
-# -----------------------------------------------------------------------------
-# def _statetoken(s,names)
-#
-# Given a declaration name s of the form "t_" and a dictionary whose keys are
-# state names, this function returns a tuple (states,tokenname) where states
-# is a tuple of state names and tokenname is the name of the token.  For example,
-# calling this with s = "t_foo_bar_SPAM" might return (('foo','bar'),'SPAM')
-# -----------------------------------------------------------------------------
+
 def _statetoken(s, names):
     parts = s.split('_')
     for i, part in enumerate(parts[1:], 1):
@@ -403,12 +289,6 @@ def _statetoken(s, names):
     return (states, tokenname)
 
 
-# -----------------------------------------------------------------------------
-# LexerReflect()
-#
-# This class represents information needed to build a lexer as extracted from a
-# user's input file.
-# -----------------------------------------------------------------------------
 class LexerReflect(object):
     def __init__(self, ldict, log=None, reflags=0):
         self.ldict      = ldict
@@ -511,8 +391,7 @@ class LexerReflect(object):
                         continue
                     self.stateinfo[name] = statetype
 
-    # Get all of the symbols with a t_ prefix and sort them into various
-    # categories (functions, strings, error functions, and ignore characters)
+
 
     def get_rules(self):
         tsymbols = [f for f in self.ldict if f[:2] == 't_']
@@ -675,14 +554,6 @@ class LexerReflect(object):
         for module in self.modules:
             self.validate_module(module)
 
-    # -----------------------------------------------------------------------------
-    # validate_module()
-    #
-    # This checks to see if there are duplicated t_rulename() functions or strings
-    # in the parser input file.  This is done using a simple regular expression
-    # match on each line in the source code of the given module.
-    # -----------------------------------------------------------------------------
-
     def validate_module(self, module):
         try:
             lines, linen = inspect.getsourcelines(module)
@@ -709,11 +580,6 @@ class LexerReflect(object):
                     self.error = True
             linen += 1
 
-# -----------------------------------------------------------------------------
-# lex(module)
-#
-# Build all of the regular expression rules from definitions in the supplied module
-# -----------------------------------------------------------------------------
 def lex(*, module=None, object=None, debug=False, 
         reflags=int(re.VERBOSE), debuglog=None, errorlog=None):
 
@@ -852,12 +718,6 @@ def lex(*, module=None, object=None, debug=False,
 
     return lexobj
 
-# -----------------------------------------------------------------------------
-# runmain()
-#
-# This runs the lexer as a main program
-# -----------------------------------------------------------------------------
-
 def runmain(lexer=None, data=None):
     if not data:
         try:
@@ -883,13 +743,6 @@ def runmain(lexer=None, data=None):
         if not tok:
             break
         sys.stdout.write(f'({tok.type},{tok.value!r},{tok.lineno},{tok.lexpos})\n')
-
-# -----------------------------------------------------------------------------
-# @TOKEN(regex)
-#
-# This decorator function can be used to set the regex expression on a function
-# when its docstring might need to be set in an alternative way
-# -----------------------------------------------------------------------------
 
 def TOKEN(r):
     def set_regex(f):
