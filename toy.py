@@ -111,3 +111,19 @@ t.printTrieToFile(output)
 
 input.close()
 output.close()
+
+
+input2  = open("input_2.txt", "r", encoding='utf-8')
+output2 = open("output_2.txt", "w", encoding='utf-8')
+lexer.input(input2.read())
+for tok in lexer:
+    if tok.type=='NEWLINE':
+        output2.write("\n")
+    else:
+        output2.write(tok.type.lower() + " ")
+        t.searchAndCreateIDs(tok.value)
+output2.write("\n")
+t.printTrieToFile(output2)
+
+input2.close()
+output2.close()
