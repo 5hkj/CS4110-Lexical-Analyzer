@@ -314,7 +314,14 @@ precedence = (
     ('left', 'LEFTBRACKET', 'PERIOD')
 )
 
-
+def genOutFileName(newName):
+    out = ''
+    for s in newName.split('.'):
+        if s.find('txt') >= 0:
+            out += '.csv'
+        else:
+            out += s
+    return out
 # function process values
 def clean_data(d_list: list) -> dict:
     data_dict = {
@@ -356,7 +363,7 @@ if __name__ == '__main__':
 
     # use code below to parse a txt file,replace
     # sample_input.txt with the name of the file
-    file = open("p2_input01.txt", "r")
+    file = open(input('Enter input file name: '), "r")
     if file.mode == 'r':
         debug_info = parser.parse(file.read(), lexer, debug=log)
 
@@ -403,7 +410,7 @@ if __name__ == '__main__':
 
     # generate csv file
     # change filename as seen fit with '.csv' extension
-    filename = 'output.csv'
+    filename = genOutFileName(file.name) #'output.csv'
     try:
         with open(filename, 'w', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=key_list)
