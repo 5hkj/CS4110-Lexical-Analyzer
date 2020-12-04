@@ -1,0 +1,185 @@
+Stack,Action
+" . LexToken(INT,'int',1,0)", Shift and goto state 13
+" INT . LexToken(ID,'fact',1,4)", Reduce rule [Type -> INT] with ['int'] and goto state 8
+" Type . LexToken(ID,'fact',1,4)", Shift and goto state 19
+" Type ID . LexToken(LEFTPAREN,'(',1,9)", Shift and goto state 26
+" Type ID LEFTPAREN . LexToken(INT,'int',1,10)", Shift and goto state 13
+" Type ID LEFTPAREN INT . LexToken(ID,'x',1,14)", Reduce rule [Type -> INT] with ['int'] and goto state 35
+" Type ID LEFTPAREN Type . LexToken(ID,'x',1,14)", Shift and goto state 58
+" Type ID LEFTPAREN Type ID . LexToken(RIGHTPAREN,')',1,15)"," Reduce rule [Variable -> Type ID] with [None,'x'] and goto state 39"
+" Type ID LEFTPAREN Variable . LexToken(RIGHTPAREN,')',1,15)", Reduce rule [Formals -> Variable] with [None] and goto state 37
+" Type ID LEFTPAREN Formals . LexToken(RIGHTPAREN,')',1,15)", Shift and goto state 60
+" Type ID LEFTPAREN Formals RIGHTPAREN . LexToken(LEFTBRACE,'{',1,17)", Shift and goto state 62
+ Type ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE . error,
+ Type ID LEFTPAREN Formals . error,
+ Type ID . error,
+ . error,
+" . LexToken(IF,'if',1,59)",
+" . LexToken(ID,'x',1,63)",
+" ID . LexToken(GREATER,'>',1,64)", Shift and goto state 9
+ . error,
+" . LexToken(RIGHTPAREN,')',1,66)",
+" . LexToken(ID,'x',1,75)",
+" ID . LexToken(MULT,'*',1,77)", Shift and goto state 9
+ . error,
+" . LexToken(ID,'fact',1,79)", Shift and goto state 9
+ ID . error,
+" . LexToken(ID,'x',1,84)",
+" ID . LexToken(MINUS,'-',1,85)", Shift and goto state 9
+ . error,
+" . LexToken(RIGHTPAREN,')',1,87)",
+" . LexToken(NEWLINE,'\n',1,89)",
+" . LexToken(RETURN,'return',1,99)",
+" . LexToken(SEMICOLON,';',1,107)",
+" . LexToken(RIGHTBRACE,'}',1,109)",
+" . LexToken(VOID,'void',1,111)",
+" VOID . LexToken(ID,'main',1,116)", Shift and goto state 10
+" VOID ID . LexToken(LEFTPAREN,'(',1,121)", Shift and goto state 23
+" VOID ID LEFTPAREN . LexToken(RIGHTPAREN,')',1,122)", Shift and goto state 30
+" VOID ID LEFTPAREN RIGHTPAREN . LexToken(LEFTBRACE,'{',1,124)", Shift and goto state 43
+" VOID ID LEFTPAREN RIGHTPAREN LEFTBRACE . LexToken(NEWLINE,'\n',1,125)", Shift and goto state 62
+ VOID ID LEFTPAREN RIGHTPAREN . error,
+ VOID ID . error,
+ . error,
+" . LexToken(INT,'int',1,214)",
+" INT . LexToken(ID,'x',1,218)", Shift and goto state 13
+" Type . LexToken(ID,'x',1,218)", Reduce rule [Type -> INT] with ['int'] and goto state 8
+" Type ID . LexToken(SEMICOLON,';',1,219)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,219)"," Reduce rule [Variable -> Type ID] with [None,'x'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,220)", Shift and goto state 18
+ Variable . error,
+" . LexToken(INT,'int',1,225)",
+" INT . LexToken(ID,'total',1,229)", Shift and goto state 13
+" Type . LexToken(ID,'total',1,229)", Reduce rule [Type -> INT] with ['int'] and goto state 8
+" Type ID . LexToken(SEMICOLON,';',1,234)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,234)"," Reduce rule [Variable -> Type ID] with [None,'total'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,235)", Shift and goto state 18
+ Variable . error,
+" . LexToken(PRINTLN,'println',1,240)",
+" . LexToken(STRINGCONSTANT,'""factorial of 10 is ""',1,249)",
+" . LexToken(ID,'fact',1,272)",
+" ID . LexToken(LEFTPAREN,'(',1,277)", Shift and goto state 9
+ . error,
+" . LexToken(RIGHTPAREN,')',1,280)",
+" . LexToken(STRINGCONSTANT,'"" from the recursive function""',1,283)",
+" . LexToken(SEMICOLON,';',1,314)",
+" . LexToken(ID,'total',1,320)",
+" ID . LexToken(ASSIGN,'=',1,326)", Shift and goto state 9
+ . error,
+" . LexToken(SEMICOLON,';',1,329)",
+" . LexToken(ID,'x',1,331)", Shift and goto state 9
+ ID . error,
+" . LexToken(INTCONSTANT,'1',1,335)",
+" . LexToken(NEWLINE,'\n',1,337)",
+" . LexToken(LEFTPAREN,'(',1,346)",
+" . LexToken(ID,'x',1,350)",
+" ID . LexToken(LESSEQUAL,'<=',1,351)", Shift and goto state 9
+ . error,
+" . LexToken(SEMICOLON,';',1,355)",
+" . LexToken(LEFTBRACE,'{',1,359)",
+" . LexToken(ID,'total',1,361)", Shift and goto state 9
+ ID . error,
+" . LexToken(ID,'total',1,369)",
+" ID . LexToken(MULT,'*',1,375)", Shift and goto state 9
+ . error,
+" . LexToken(ID,'x',1,377)", Shift and goto state 9
+ ID . error,
+" . LexToken(ID,'x',1,380)",
+" ID . LexToken(ASSIGN,'=',1,382)", Shift and goto state 9
+ . error,
+" . LexToken(ID,'x',1,384)", Shift and goto state 9
+ ID . error,
+" . LexToken(INTCONSTANT,'1',1,388)",
+" . LexToken(RIGHTBRACE,'}',1,391)",
+" . LexToken(PRINTLN,'println',1,397)",
+" . LexToken(STRINGCONSTANT,'""iterative result of 10! is ""',1,406)",
+" . LexToken(ID,'total',1,437)",
+" ID . LexToken(RIGHTPAREN,')',1,442)", Shift and goto state 9
+ . error,
+" . LexToken(NEWLINE,'\n',1,444)",
+" . LexToken(NEWLINE,'\n',1,446)",
+" . LexToken(CLASS,'class',1,447)", Shift and goto state 11
+" CLASS . LexToken(ID,'CS4110',1,453)", Shift and goto state 24
+" CLASS ID . LexToken(LEFTBRACE,'{',1,460)", Shift and goto state 32
+ CLASS ID LEFTBRACE . error,
+ CLASS . error,
+" . LexToken(INT,'int',1,466)",
+" INT . LexToken(ID,'Funny',1,470)", Shift and goto state 13
+" Type . LexToken(ID,'Funny',1,470)", Reduce rule [Type -> INT] with ['int'] and goto state 8
+" Type ID . LexToken(SEMICOLON,';',1,475)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,475)"," Reduce rule [Variable -> Type ID] with [None,'Funny'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,476)", Shift and goto state 18
+ Variable . error,
+" . LexToken(DOUBLE,'double',1,481)",
+" DOUBLE . LexToken(ID,'funny',1,488)", Shift and goto state 14
+" Type . LexToken(ID,'funny',1,488)", Reduce rule [Type -> DOUBLE] with ['double'] and goto state 8
+" Type ID . LexToken(SEMICOLON,';',1,493)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,493)"," Reduce rule [Variable -> Type ID] with [None,'funny'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,494)", Shift and goto state 18
+ Variable . error,
+" . LexToken(BOOLEAN,'boolean',1,499)",
+" BOOLEAN . LexToken(ID,'flag',1,507)", Shift and goto state 15
+" Type . LexToken(ID,'flag',1,507)", Reduce rule [Type -> BOOLEAN] with ['boolean'] and goto state 8
+" Type ID . LexToken(SEMICOLON,';',1,511)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,511)"," Reduce rule [Variable -> Type ID] with [None,'flag'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,512)", Shift and goto state 18
+ Variable . error,
+" . LexToken(STRING,'string',1,517)",
+" STRING . LexToken(ID,'s',1,524)", Shift and goto state 16
+" Type . LexToken(ID,'s',1,524)", Reduce rule [Type -> STRING] with ['string'] and goto state 8
+" Type ID . LexToken(SEMICOLON,';',1,525)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,525)"," Reduce rule [Variable -> Type ID] with [None,'s'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,526)", Shift and goto state 18
+ Variable . error,
+" . LexToken(INT,'int',1,531)",
+" INT . LexToken(LEFTBRACKET,'[',1,535)", Shift and goto state 13
+" Type . LexToken(LEFTBRACKET,'[',1,535)", Reduce rule [Type -> INT] with ['int'] and goto state 8
+" Type LEFTBRACKET . LexToken(RIGHTBRACKET,']',1,536)", Shift and goto state 20
+" Type LEFTBRACKET RIGHTBRACKET . LexToken(ID,'a',1,538)", Shift and goto state 27
+" Type . LexToken(ID,'a',1,538)"," Reduce rule [Type -> Type LEFTBRACKET RIGHTBRACKET] with [None,'[',']'] and goto state 8"
+" Type ID . LexToken(SEMICOLON,';',1,539)", Shift and goto state 19
+" Variable . LexToken(SEMICOLON,';',1,539)"," Reduce rule [Variable -> Type ID] with [None,'a'] and goto state 7"
+" Variable SEMICOLON . LexToken(NEWLINE,'\n',1,540)", Shift and goto state 18
+ Variable . error,
+" . LexToken(ID,'flag',1,545)",
+" ID . LexToken(ASSIGN,'=',1,550)", Shift and goto state 9
+ . error,
+" . LexToken(SEMICOLON,';',1,556)",
+" . LexToken(ID,'Funny',1,562)",
+" ID . LexToken(ASSIGN,'=',1,568)", Shift and goto state 9
+ . error,
+" . LexToken(SEMICOLON,';',1,576)",
+" . LexToken(ID,'funny',1,578)", Shift and goto state 9
+ ID . error,
+" . LexToken(DOUBLECONSTANT,'123456.0E+7',1,586)",
+" . LexToken(NEWLINE,'\n',1,598)",
+" . LexToken(ID,'s',1,603)", Shift and goto state 9
+ ID . error,
+" . LexToken(STRINGCONSTANT,'""hello world""',1,607)",
+" . LexToken(NEWLINE,'\n',1,621)",
+" . LexToken(LEFTPAREN,'(',1,632)",
+" . LexToken(ID,'x',1,633)", Shift and goto state 9
+ ID . error,
+" . LexToken(LEFTPAREN,'(',1,637)",
+" . LexToken(ID,'Funny',1,638)", Shift and goto state 9
+ ID . error,
+" . LexToken(INTCONSTANT,'10',1,644)",
+" . LexToken(LESS,'<',1,648)",
+" . LexToken(RIGHTPAREN,')',1,650)",
+" . LexToken(LEFTPAREN,'(',1,660)",
+" . LexToken(ID,'s',1,661)", Shift and goto state 9
+ ID . error,
+" . LexToken(STRINGCONSTANT,'"" have fun !""',1,664)",
+" . LexToken(SEMICOLON,';',1,678)",
+" . LexToken(ID,'a',1,684)",
+" ID . LexToken(ASSIGN,'=',1,686)", Shift and goto state 9
+ . error,
+" . LexToken(LEFTPAREN,'(',1,697)",
+" . LexToken(COMMA,',',1,700)",
+" . LexToken(INT,'int',1,702)", Shift and goto state 13
+" INT . LexToken(RIGHTPAREN,')',1,705)", Reduce rule [Type -> INT] with ['int'] and goto state 8
+ Type . error,
+" . LexToken(SEMICOLON,';',1,706)",
+" . LexToken(RIGHTBRACE,'}',1,708)",
+ . $end,
+,
