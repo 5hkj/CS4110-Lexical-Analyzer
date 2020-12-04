@@ -363,7 +363,10 @@ if __name__ == '__main__':
 
     # use code below to parse a txt file,replace
     # sample_input.txt with the name of the file
-    file = open(input('Enter input file name: '), "r")
+    try:
+        file = open(input('Enter input file name: '), 'r')
+    except IOError:
+        print('I/O error encountered')
     if file.mode == 'r':
         debug_info = parser.parse(file.read(), lexer, debug=log)
 
@@ -411,12 +414,15 @@ if __name__ == '__main__':
     # generate csv file
     # change filename as seen fit with '.csv' extension
     filename = genOutFileName(file.name) #'output.csv'
+    file.close()
     try:
         with open(filename, 'w', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=key_list)
+            csvfile.flush()
             writer.writeheader()
             for data in data_dict:
                 writer.writerow(data)
+            csvfile.close()
             print('csv file created!')
     except IOError:
         print('I/O error encountered')
