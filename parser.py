@@ -414,15 +414,15 @@ if __name__ == '__main__':
     # generate csv file
     # change filename as seen fit with '.csv' extension
     filename = genOutFileName(file.name) #'output.csv'
-    file.close()
+    #file.close()
     try:
         with open(filename, 'w', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=key_list)
-            csvfile.flush()
+            file.flush()
             writer.writeheader()
             for data in data_dict:
                 writer.writerow(data)
-            csvfile.close()
+            file.close()
             print('csv file created!')
     except IOError:
         print('I/O error encountered')

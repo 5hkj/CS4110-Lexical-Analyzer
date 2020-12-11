@@ -6832,3 +6832,82 @@
    yacc.py:1809:shift/reduce conflict for AND in state 184 resolved as shift
    yacc.py:1809:shift/reduce conflict for OR in state 184 resolved as shift
    yacc.py:1809:shift/reduce conflict for ELSE in state 233 resolved as shift
+   yacc.py: 161:PLY: PARSE DEBUG START
+   yacc.py: 188:State  : 0
+   yacc.py: 208:Stack  : . LexToken(VOID,'void',1,0)
+   yacc.py: 217:Action : Shift and goto state 10
+   yacc.py: 188:State  : 10
+   yacc.py: 208:Stack  : VOID . LexToken(ID,'f',1,5)
+   yacc.py: 217:Action : Shift and goto state 23
+   yacc.py: 188:State  : 23
+   yacc.py: 208:Stack  : VOID ID . LexToken(LEFTPAREN,'(',1,6)
+   yacc.py: 217:Action : Shift and goto state 30
+   yacc.py: 188:State  : 30
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN . LexToken(DOUBLE,'double',1,7)
+   yacc.py: 217:Action : Shift and goto state 14
+   yacc.py: 188:State  : 14
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN DOUBLE . LexToken(ID,'x',1,14)
+   yacc.py: 237:Action : Reduce rule [Type -> DOUBLE] with ['double'] and goto state 35
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 35
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Type . LexToken(ID,'x',1,14)
+   yacc.py: 217:Action : Shift and goto state 58
+   yacc.py: 188:State  : 58
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Type ID . LexToken(COMMA,',',1,15)
+   yacc.py: 237:Action : Reduce rule [Variable -> Type ID] with [None,'x'] and goto state 39
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 39
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable . LexToken(COMMA,',',1,15)
+   yacc.py: 217:Action : Shift and goto state 63
+   yacc.py: 188:State  : 63
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable COMMA . LexToken(DOUBLE,'double',1,17)
+   yacc.py: 217:Action : Shift and goto state 14
+   yacc.py: 188:State  : 14
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable COMMA DOUBLE . LexToken(ID,'y',1,24)
+   yacc.py: 237:Action : Reduce rule [Type -> DOUBLE] with ['double'] and goto state 35
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 35
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable COMMA Type . LexToken(ID,'y',1,24)
+   yacc.py: 217:Action : Shift and goto state 58
+   yacc.py: 188:State  : 58
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable COMMA Type ID . LexToken(RIGHTPAREN,')',1,25)
+   yacc.py: 237:Action : Reduce rule [Variable -> Type ID] with [None,'y'] and goto state 39
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 39
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable COMMA Variable . LexToken(RIGHTPAREN,')',1,25)
+   yacc.py: 237:Action : Reduce rule [Formals -> Variable] with [None] and goto state 117
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 117
+   yacc.py: 205:Defaulted state 117: Reduce using 22
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Variable COMMA Formals . LexToken(RIGHTPAREN,')',1,25)
+   yacc.py: 237:Action : Reduce rule [Formals -> Variable COMMA Formals] with [None,',',None] and goto state 42
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 42
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Formals . LexToken(RIGHTPAREN,')',1,25)
+   yacc.py: 217:Action : Shift and goto state 66
+   yacc.py: 188:State  : 66
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Formals RIGHTPAREN . LexToken(LEFTBRACE,'{',1,27)
+   yacc.py: 217:Action : Shift and goto state 62
+   yacc.py: 188:State  : 62
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE . LexToken(RIGHTBRACE,'}',1,29)
+   yacc.py: 217:Action : Shift and goto state 82
+   yacc.py: 188:State  : 82
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE RIGHTBRACE . $end
+   yacc.py: 237:Action : Reduce rule [StatementBlock -> LEFTBRACE RIGHTBRACE] with ['{','}'] and goto state 119
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 119
+   yacc.py: 208:Stack  : VOID ID LEFTPAREN Formals RIGHTPAREN StatementBlock . $end
+   yacc.py: 237:Action : Reduce rule [FunctionDeclaration -> VOID ID LEFTPAREN Formals RIGHTPAREN StatementBlock] with ['void','f','(',None,')',None] and goto state 4
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 4
+   yacc.py: 208:Stack  : FunctionDeclaration . $end
+   yacc.py: 237:Action : Reduce rule [Declaration -> FunctionDeclaration] with [None] and goto state 2
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 2
+   yacc.py: 208:Stack  : Declaration . $end
+   yacc.py: 237:Action : Reduce rule [Program -> Declaration] with [None] and goto state 1
+   yacc.py: 264:Result : <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 188:State  : 1
+   yacc.py: 208:Stack  : Program . $end
+   yacc.py: 316:Done   : Returning <NoneType @ 0x7ffa302a3cd8> (None)
+   yacc.py: 317:PLY: PARSE DEBUG END
