@@ -6,14 +6,23 @@ Python 3.x is required. Preferably the same version. Also have PLY version 3.11 
 If the yacc.py and lex.py included doesn't work, have the PLY plugins installed
 
 # To Run: 
-On PyCharm: 
-
+#On PyCharm: 
 Run toy.py for project 1. It will output to a text file.
 
 Run parser.py for project 2
 Enter in the text file you wish to test.
 Test Cases starts with "p2_input##"
 The "##" indicates the digits of file such as "p2_input01"
+
+#On Python IDLE
+Go to File > Open > Project Directory > Open "parser.py"
+Afterwards, go to Run > Run Module (F5)
+
+#On Terminal
+Change into the project directory and then type "python parser.py"
+
+#On other IDEs
+Refer to user manual of the specific IDE to open the project and run parser.py
 
 # Outputs:
 The output files are generated as CSV files that will show the actions of the given inputs in the inputted files. 
