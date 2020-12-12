@@ -15,9 +15,17 @@ Stack,Action
 " VOID ID LEFTPAREN Variable COMMA Formals . LexToken(RIGHTPAREN,')',1,25)"," Reduce rule [Formals -> Variable COMMA Formals] with [None,',',None] and goto state 42"
 " VOID ID LEFTPAREN Formals . LexToken(RIGHTPAREN,')',1,25)", Shift and goto state 66
 " VOID ID LEFTPAREN Formals RIGHTPAREN . LexToken(LEFTBRACE,'{',1,27)", Shift and goto state 62
-" VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE . LexToken(RIGHTBRACE,'}',1,29)", Shift and goto state 82
- VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE RIGHTBRACE . $end," Reduce rule [StatementBlock -> LEFTBRACE RIGHTBRACE] with ['{','}'] and goto state 119"
- VOID ID LEFTPAREN Formals RIGHTPAREN StatementBlock . $end," Reduce rule [FunctionDeclaration -> VOID ID LEFTPAREN Formals RIGHTPAREN StatementBlock] with ['void','f','(',None,')',None] and goto state 4"
- FunctionDeclaration . $end, Reduce rule [Declaration -> FunctionDeclaration] with [None] and goto state 2
- Declaration . $end, Reduce rule [Program -> Declaration] with [None] and goto state 1
- Program . $end,
+" VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE . LexToken(FOR,'for',1,33)", Shift and goto state 108
+" VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE FOR . LexToken(LEFTPAREN,'(',1,37)", Shift and goto state 165
+" VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE FOR LEFTPAREN . LexToken(SEMICOLON,';',1,39)", Shift and goto state 201
+ VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE FOR LEFTPAREN SEMICOLON . error,
+ VOID ID LEFTPAREN Formals RIGHTPAREN LEFTBRACE FOR . error,
+ VOID ID LEFTPAREN Formals RIGHTPAREN . error,
+ VOID ID LEFTPAREN . error,
+ VOID . error,
+" . LexToken(RIGHTPAREN,')',1,43)",
+" . LexToken(ID,'x',1,45)", Shift and goto state 9
+ ID . error,
+" . LexToken(INTCONSTANT,'1',1,49)",
+" . LexToken(RIGHTBRACE,'}',1,52)",
+ . $end,

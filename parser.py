@@ -1,6 +1,5 @@
 import yacc
-from toy import tokens
-from toy import lexer
+from toy import tokens, lexer
 import logging
 import csv
 
@@ -299,7 +298,7 @@ def p_Constant(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    print("Syntax error!")
 
 
 precedence = (
@@ -314,6 +313,7 @@ precedence = (
     ('left', 'LEFTBRACKET', 'PERIOD')
 )
 
+#---- Process the extension txt to csv ---- #
 def genOutFileName(newName):
     out = ''
     for s in newName.split('.'):
@@ -322,6 +322,7 @@ def genOutFileName(newName):
         else:
             out += s
     return out
+
 # function process values
 def clean_data(d_list: list) -> dict:
     data_dict = {
@@ -354,17 +355,14 @@ if __name__ == '__main__':
     )
     log = logging.getLogger()
     # args for yacc debug=True,debuglog=log when debugging
+
     # Build the parser
     parser = yacc.yacc(debug=True, debuglog=log)
-
-    # input_string = 'int i = 1;'
-    # # # when generating log file change debug to log
-    # debug_info = parser.parse(input_string, lexer, debug=log)
 
     # use code below to parse a txt file,replace
     # sample_input.txt with the name of the file
     try:
-        file = open(input('Enter input file name: '), 'r')
+        file = open(input('\nEnter input file name: '), 'r')
     except IOError:
         print('I/O error encountered')
     if file.mode == 'r':
@@ -411,10 +409,10 @@ if __name__ == '__main__':
         else:
             tmp_group.append(line)
 
-    # generate csv file
+    # ------generate csv file-----#
     # change filename as seen fit with '.csv' extension
-    filename = genOutFileName(file.name) #'output.csv'
-    #file.close()
+    # 'output.csv'
+    filename = genOutFileName(file.name)
     try:
         with open(filename, 'w', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=key_list)

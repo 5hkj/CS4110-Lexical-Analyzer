@@ -1,5 +1,7 @@
-import ply.lex as lex
+import lex
 import trietable as trie
+
+'''This toy.py program is our tokenizer'''
 
 # 1. keywords/reserved words incl. 7. boolean constant
 keyword = {
@@ -28,6 +30,7 @@ keyword = {
     'while':      'WHILE'
 }
 
+#List of our tokens
 tokens = [
             'PLUS', 'MINUS', 'MULT', 'DIV', 'MOD', 'LESS', 'LESSEQUAL',
             'GREATER', 'GREATEREQUAL', 'EQUAL', 'NOTEQUAL', 'AND',
@@ -73,11 +76,12 @@ t_STRINGCONSTANT = r'\"(\\.|[^"\\])*\"'
 # 3. white spaces
 t_ignore_SPACE = r'\s'
 t_ignore_TAB = r'\t'
-# t_ignore_NEWLINE = r'\n'
+t_ignore_NEWLINE = r'\n'
 
 # 9. comments
 t_ignore_COMMENT = r'\//.*'
 t_ignore_BLOCK_COMMENT = r'\/\*(.|\n)*\*\/'
+
 
 def t_ID(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
@@ -85,21 +89,29 @@ def t_ID(t):
     t.type = keyword.get(t.value, 'ID')
     return t
 
-def t_NEWLINE(t):
-    r'\n'
-    return t
-
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
+'''Causes Error'''
+# def t_NEWLINE(t):
+#     r'\n'
+#     return t
 
 
+#--- Beginning of Project 1 ---#
+#Analyze the Toy_program.txt and output to a text file called "toy_output"
 lexer = lex.lex()
+
+
 t = trie.TrieTable()
 input  = open("toy_program.txt", "r", encoding='utf-8')
-output = open("output.txt", "w", encoding='utf-8')
+output = open("toy_output.txt", "w", encoding='utf-8')
 lexer.input(input.read())
+
+
+#Works if we define the case for newline
+'''
 for tok in lexer:
     if tok.type=='NEWLINE':
         output.write("\n")
@@ -107,23 +119,35 @@ for tok in lexer:
         output.write(tok.type.lower() + " ")
         t.searchAndCreateIDs(tok.value)
 output.write("\n")
-t.printTrieToFile(output)
+'''
 
+# ---- Read and output the tokens ---- #
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    else:
+        output.write(tok.type.lower() + " ")
+        output.write("\n")
+        t.searchAndCreateIDs(tok.value)
+
+# ---- Prints out the trieTable ---- #
+t.printTrieToFile(output)
+print("Toy_output.txt created")
 input.close()
 output.close()
 
-
-input2  = open("input_2.txt", "r", encoding='utf-8')
-output2 = open("output_2.txt", "w", encoding='utf-8')
-lexer.input(input2.read())
-for tok in lexer:
-    if tok.type=='NEWLINE':
-        output2.write("\n")
-    else:
-        output2.write(tok.type.lower() + " ")
-        t.searchAndCreateIDs(tok.value)
-output2.write("\n")
-t.printTrieToFile(output2)
-
-input2.close()
-output2.close()
+'''Additional testing on random code '''
+# input2  = open("Random_input.txt", "r", encoding='utf-8')
+# output2 = open("Random_output.txt", "w", encoding='utf-8')
+# lexer.input(input2.read())
+# for tok in lexer:
+#     if tok.type=='NEWLINE':
+#         output2.write("\n")
+#     else:
+#         output2.write(tok.type.lower() + " ")
+#         t.searchAndCreateIDs(tok.value)
+# output2.write("\n")
+# t.printTrieToFile(output2)
+# input2.close()
+# output2.close()
