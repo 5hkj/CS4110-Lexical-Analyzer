@@ -1,30 +1,160 @@
-int id leftparen int id rightparen leftbrace 
-
-if leftparen id greater intconstant rightparen return id mult id leftparen id minus intconstant rightparen semicolon 
-else return intconstant semicolon 
+int 
+id 
+leftparen 
+int 
+id 
+rightparen 
+leftbrace 
+if 
+leftparen 
+id 
+greater 
+intconstant 
+rightparen 
+return 
+id 
+mult 
+id 
+leftparen 
+id 
+minus 
+intconstant 
+rightparen 
+semicolon 
+else 
+return 
+intconstant 
+semicolon 
 rightbrace 
-void id leftparen rightparen leftbrace 
-
-int id semicolon 
-int id semicolon 
-println leftparen stringconstant comma id leftparen intconstant rightparen comma stringconstant rightparen semicolon 
-id assign intconstant semicolon id assign intconstant semicolon 
-for leftparen semicolon id lessequal intconstant semicolon rightparen leftbrace id assign id mult id semicolon id assign id plus intconstant semicolon rightbrace 
-println leftparen stringconstant comma id rightparen semicolon 
+void 
+id 
+leftparen 
+rightparen 
+leftbrace 
+int 
+id 
+semicolon 
+int 
+id 
+semicolon 
+println 
+leftparen 
+stringconstant 
+comma 
+id 
+leftparen 
+intconstant 
+rightparen 
+comma 
+stringconstant 
+rightparen 
+semicolon 
+id 
+assign 
+intconstant 
+semicolon 
+id 
+assign 
+intconstant 
+semicolon 
+for 
+leftparen 
+semicolon 
+id 
+lessequal 
+intconstant 
+semicolon 
+rightparen 
+leftbrace 
+id 
+assign 
+id 
+mult 
+id 
+semicolon 
+id 
+assign 
+id 
+plus 
+intconstant 
+semicolon 
 rightbrace 
-class id leftbrace 
-int id semicolon 
-double id semicolon 
-boolean id semicolon 
-string id semicolon 
-int leftbracket rightbracket id semicolon 
-id assign booleanconstant semicolon 
-id assign intconstant semicolon id assign intconstant id plus intconstant semicolon 
-id assign stringconstant semicolon 
-while leftparen id assign leftparen id div intconstant rightparen less intconstant rightparen println leftparen id comma stringconstant rightparen semicolon 
-id assign newarray leftparen intconstant comma int rightparen semicolon 
+println 
+leftparen 
+stringconstant 
+comma 
+id 
+rightparen 
+semicolon 
 rightbrace 
-
+class 
+id 
+leftbrace 
+int 
+id 
+semicolon 
+double 
+id 
+semicolon 
+boolean 
+id 
+semicolon 
+string 
+id 
+semicolon 
+int 
+leftbracket 
+rightbracket 
+id 
+semicolon 
+id 
+assign 
+booleanconstant 
+semicolon 
+id 
+assign 
+intconstant 
+semicolon 
+id 
+assign 
+intconstant 
+id 
+plus 
+intconstant 
+semicolon 
+id 
+assign 
+stringconstant 
+semicolon 
+while 
+leftparen 
+id 
+assign 
+leftparen 
+id 
+div 
+intconstant 
+rightparen 
+less 
+intconstant 
+rightparen 
+println 
+leftparen 
+id 
+comma 
+stringconstant 
+rightparen 
+semicolon 
+id 
+assign 
+newarray 
+leftparen 
+intconstant 
+comma 
+int 
+rightparen 
+semicolon 
+rightbrace 
 
            A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R   S   T   U   V  
 switch:   -1  -1  49  -1  94  55  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  
